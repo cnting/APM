@@ -15,8 +15,8 @@ import com.cnting.apm_trace_canary.core.UiThreadMonitor
 class TracePlugin : Plugin() {
     override fun init(application: Application, pluginListener: PluginListener) {
         super.init(application, pluginListener)
-
     }
+
     override fun start() {
         super.start()
         val runnable = Runnable {
