@@ -2,12 +2,14 @@ package com.cnting.apm_lib.plugin
 
 import android.app.Application
 import com.cnting.apm_lib.listener.PluginListener
+import com.cnting.apm_lib.report.Issue
+import com.cnting.apm_lib.report.OnIssueDetectListener
 
 /**
  * Created by cnting on 2023/7/24
  *
  */
-abstract class Plugin : IPlugin {
+abstract class Plugin : IPlugin, OnIssueDetectListener {
 
     private var application: Application? = null
     private var pluginListener: PluginListener? = null
@@ -44,6 +46,10 @@ abstract class Plugin : IPlugin {
 
     override fun getTag(): String {
         return javaClass.name
+    }
+
+    override fun onDetectIssue(issue: Issue) {
+        // TODO:
     }
 
     companion object {

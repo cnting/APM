@@ -3,6 +3,7 @@ package com.cnting.apm_trace_canary.core
 import android.os.SystemClock
 import android.util.Log
 import android.view.Choreographer
+import com.cnting.apm_lib.lifecycle.owners.ProcessUiLifecycleOwner
 import com.cnting.apm_lib.util.ReflectUtils
 import com.cnting.apm_trace_canary.constant.Constants
 import com.cnting.apm_trace_canary.listener.LooperObserver
@@ -14,9 +15,9 @@ import java.lang.reflect.Method
  */
 object UiThreadMonitor {
     private const val TAG = "UiThreadMonitor"
-    private const val CALLBACK_INPUT = 0
-    private const val CALLBACK_ANIMATION = 1
-    private const val CALLBACK_TRAVERSAL = 2
+    const val CALLBACK_INPUT = 0
+    const val CALLBACK_ANIMATION = 1
+    const val CALLBACK_TRAVERSAL = 2
     private const val CALLBACK_LAST = CALLBACK_TRAVERSAL
     private const val DO_QUEUE_BEGIN = 1
     private const val DO_QUEUE_END = 2
@@ -230,9 +231,8 @@ object UiThreadMonitor {
         val endNs = System.nanoTime()
         observers.forEach {
             if (it.isDispatchBegin) {
-                // TODO: focusActivity从ProcessUiLifecycleOwner里拿
                 it.doFrame(
-                    "",
+                    ProcessUiLifecycleOwner.visibleScene,
                     startNs,
                     endNs,
                     isVsyncFrame,
@@ -258,5 +258,12 @@ object UiThreadMonitor {
 
     private fun getIntendedFrameTimeNs(startNs: Long): Long {
         return ReflectUtils.reflectObject(vsyncReceiver, "mTimestampNanos", startNs)
+    }
+
+    fun getQueueCost(type: Int, token: Long): Long {
+        if (token != this.token) {
+            return -1
+        }
+        return if (queueStatus!![type] == DO_QUEUE_END) queueCost!![type] else 0
     }
 }

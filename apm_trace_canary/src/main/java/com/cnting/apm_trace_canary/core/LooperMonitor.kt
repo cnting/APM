@@ -18,9 +18,9 @@ class LooperMonitor(private val looper: Looper) : IdleHandler {
     companion object {
         private const val TAG = "LooperMonitor"
         private const val CHECK_TIME = 60 * 1000
-        private val sMainMonitor = of(Looper.getMainLooper())
-
         private val sLooperMonitorMap = mutableMapOf<Looper, LooperMonitor>()
+
+        private val sMainMonitor = of(Looper.getMainLooper())
 
         private fun of(looper: Looper): LooperMonitor {
             return sLooperMonitorMap.getOrPut(looper) {

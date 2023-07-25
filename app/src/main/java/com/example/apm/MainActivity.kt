@@ -1,46 +1,23 @@
 package com.example.apm
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.apm.ui.theme.APMTheme
+import com.cnting.apm_lib.Matrix
+import com.cnting.apm_trace_canary.TracePlugin
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            APMTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
-            }
+        setContentView(R.layout.activity_main)
+        findViewById<View>(R.id.startMatrix).setOnClickListener {
+            val matrix = Matrix.Builder(application)
+                .plugin(TracePlugin())
+                .build()
+            matrix.startAllPlugin()
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    APMTheme {
-        Greeting("Android")
+        findViewById<View>(R.id.update).setOnClickListener {
+            it.requestLayout()
+        }
     }
 }

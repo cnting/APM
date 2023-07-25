@@ -2,6 +2,8 @@ package com.cnting.apm_lib.util;
 
 
 
+import android.util.Log;
+
 import java.lang.reflect.Field;
 
 public class ReflectFiled<Type> {
@@ -51,7 +53,7 @@ public class ReflectFiled<Type> {
             if (!ignoreFieldNoExist) {
                 throw new NoSuchFieldException();
             }
-            MatrixLog.w(TAG, String.format("Field %s is no exists.", mFieldName));
+            Log.w(TAG, String.format("Field %s is no exists.", mFieldName));
             return null;
         }
         Type fieldVal = null;
@@ -70,7 +72,7 @@ public class ReflectFiled<Type> {
             if (!ignoreFieldNoExist) {
                 throw new NoSuchFieldException();
             }
-            MatrixLog.w(TAG, String.format("Field %s is no exists.", mFieldName));
+            Log.w(TAG, String.format("Field %s is no exists.", mFieldName));
             return null;
         }
         Type fieldVal = null;
@@ -91,11 +93,11 @@ public class ReflectFiled<Type> {
         try {
             fieldVal = get(true, instance);
         } catch (NoSuchFieldException e) {
-            MatrixLog.i(TAG, "getWithoutThrow, exception occur :%s", e);
+            Log.i(TAG, "getWithoutThrow, exception occur :%s", e);
         } catch (IllegalAccessException e) {
-            MatrixLog.i(TAG, "getWithoutThrow, exception occur :%s", e);
+            Log.i(TAG, "getWithoutThrow, exception occur :%s", e);
         } catch (IllegalArgumentException e) {
-            MatrixLog.i(TAG, "getWithoutThrow, exception occur :%s", e);
+            Log.i(TAG, "getWithoutThrow, exception occur :%s", e);
         }
         return fieldVal;
     }
@@ -105,11 +107,11 @@ public class ReflectFiled<Type> {
         try {
             fieldVal = get(true);
         } catch (NoSuchFieldException e) {
-            MatrixLog.i(TAG, "getWithoutThrow, exception occur :%s", e);
+            Log.i(TAG, "getWithoutThrow, exception occur :%s", e);
         } catch (IllegalAccessException e) {
-            MatrixLog.i(TAG, "getWithoutThrow, exception occur :%s", e);
+            Log.i(TAG, "getWithoutThrow, exception occur :%s", e);
         } catch (IllegalArgumentException e) {
-            MatrixLog.i(TAG, "getWithoutThrow, exception occur :%s", e);
+            Log.i(TAG, "getWithoutThrow, exception occur :%s", e);
         }
         return fieldVal;
     }
@@ -126,7 +128,7 @@ public class ReflectFiled<Type> {
             if (!ignoreFieldNoExist) {
                 throw new NoSuchFieldException("Method " + mFieldName + " is not exists.");
             }
-            MatrixLog.w(TAG, String.format("Field %s is no exists.", mFieldName));
+            Log.w(TAG, String.format("Field %s is no exists.", mFieldName));
             return false;
         }
         mField.set(instance, val);
@@ -139,11 +141,11 @@ public class ReflectFiled<Type> {
         try {
             result = set(instance, val, true);
         } catch (NoSuchFieldException e) {
-            MatrixLog.i(TAG, "setWithoutThrow, exception occur :%s", e);
+            Log.i(TAG, "setWithoutThrow, exception occur :%s", e);
         } catch (IllegalAccessException e) {
-            MatrixLog.i(TAG, "setWithoutThrow, exception occur :%s", e);
+            Log.i(TAG, "setWithoutThrow, exception occur :%s", e);
         } catch (IllegalArgumentException e) {
-            MatrixLog.i(TAG, "setWithoutThrow, exception occur :%s", e);
+            Log.i(TAG, "setWithoutThrow, exception occur :%s", e);
         }
         return result;
     }
@@ -157,11 +159,11 @@ public class ReflectFiled<Type> {
         try {
             result = set(null, val, true);
         } catch (NoSuchFieldException e) {
-            MatrixLog.i(TAG, "setWithoutThrow, exception occur :%s", e);
+            Log.i(TAG, "setWithoutThrow, exception occur :%s", e);
         } catch (IllegalAccessException e) {
-            MatrixLog.i(TAG, "setWithoutThrow, exception occur :%s", e);
+            Log.i(TAG, "setWithoutThrow, exception occur :%s", e);
         } catch (IllegalArgumentException e) {
-            MatrixLog.i(TAG, "setWithoutThrow, exception occur :%s", e);
+            Log.i(TAG, "setWithoutThrow, exception occur :%s", e);
         }
         return result;
     }

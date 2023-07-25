@@ -1,6 +1,7 @@
 package com.cnting.apm_lib.util
 
 import android.os.Handler
+import android.os.HandlerThread
 import android.os.Looper
 
 /**
@@ -9,4 +10,10 @@ import android.os.Looper
  */
 object APMHandlerThread {
     val mainHandler = Handler(Looper.getMainLooper())
+    val defaultHandler: Handler by lazy {
+        val handlerThread = HandlerThread("APMHandlerThread")
+        handlerThread.start()
+        val handler = Handler(handlerThread.looper)
+        handler
+    }
 }

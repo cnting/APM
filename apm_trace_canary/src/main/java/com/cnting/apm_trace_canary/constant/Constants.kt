@@ -7,4 +7,12 @@ package com.cnting.apm_trace_canary.constant
 object Constants {
     const val DEFAULT_FRAME_DURATION = 16666667L
     const val TIME_MILLIS_TO_NANO = 1000000
+    const val DEFAULT_ANR = 5 * 1000
+    const val DEFAULT_NORMAL_LAG = 2 * 1000
+    const val DEFAULT_IDLE_HANDLER_LAG: Long = 2 * 1000
+    const val DEFAULT_TOUCH_EVENT_LAG: Long = 2 * 1000
+
+    enum class Type {
+        NORMAL, ANR, STARTUP, LAG, SIGNAL_ANR, SIGNAL_ANR_NATIVE_BACKTRACE, LAG_IDLE_HANDLER, LAG_TOUCH, PRIORITY_MODIFIED, TIMERSLACK_MODIFIED
+    }
 }

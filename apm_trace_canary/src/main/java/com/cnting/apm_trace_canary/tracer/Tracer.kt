@@ -1,5 +1,6 @@
 package com.cnting.apm_trace_canary.tracer
 
+import com.cnting.apm_lib.lifecycle.owners.ProcessUiLifecycleOwner
 import com.cnting.apm_trace_canary.listener.LooperObserver
 
 /**
@@ -26,4 +27,8 @@ abstract class Tracer : ITracer, LooperObserver() {
 
     abstract fun onAlive()
     abstract fun onDead()
+
+    fun isForeground(): Boolean {
+        return ProcessUiLifecycleOwner.isForeground
+    }
 }

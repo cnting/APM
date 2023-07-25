@@ -1,6 +1,8 @@
 package com.cnting.apm_lib.util;
 
 
+import android.util.Log;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -52,7 +54,7 @@ public class ReflectMethod {
             if (!ignoreFieldNoExist) {
                 throw new NoSuchFieldException("Method " + mMethodName + " is not exists.");
             }
-            MatrixLog.w(TAG, "Field %s is no exists", mMethodName);
+            Log.w(TAG, "Field " + mMethodName + " is no exists");
             return null;
         }
         return (T) mMethod.invoke(instance, args);
@@ -63,13 +65,13 @@ public class ReflectMethod {
         try {
             return invoke(instance, true, args);
         } catch (NoSuchFieldException e) {
-            MatrixLog.e(TAG, "invokeWithoutThrow, exception occur :%s", e);
+            Log.e(TAG, "invokeWithoutThrow, exception occur :" + e);
         } catch (IllegalAccessException e) {
-            MatrixLog.e(TAG, "invokeWithoutThrow, exception occur :%s", e);
+            Log.e(TAG, "invokeWithoutThrow, exception occur :" + e);
         } catch (IllegalArgumentException e) {
-            MatrixLog.e(TAG, "invokeWithoutThrow, exception occur :%s", e);
+            Log.e(TAG, "invokeWithoutThrow, exception occur :" + e);
         } catch (InvocationTargetException e) {
-            MatrixLog.e(TAG, "invokeWithoutThrow, exception occur :%s", e);
+            Log.e(TAG, "invokeWithoutThrow, exception occur :" + e);
         }
         return null;
     }
