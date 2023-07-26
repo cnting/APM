@@ -237,7 +237,7 @@ public class DeviceUtil {
                     + Long.parseLong(procStats[8]);
 
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         } finally {
             try {
                 if (null != procStatFile) {
@@ -255,7 +255,7 @@ public class DeviceUtil {
             String[] appStats = appStatString.split(" ");
             appTime = Long.parseLong(appStats[13]) + Long.parseLong(appStats[14]);
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         } finally {
             try {
                 if (null != appStatFile) {

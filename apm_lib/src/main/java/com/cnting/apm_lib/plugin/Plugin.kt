@@ -4,6 +4,7 @@ import android.app.Application
 import com.cnting.apm_lib.listener.PluginListener
 import com.cnting.apm_lib.report.Issue
 import com.cnting.apm_lib.report.OnIssueDetectListener
+import com.cnting.apm_lib.util.MatrixUtil
 
 /**
  * Created by cnting on 2023/7/24
@@ -33,7 +34,7 @@ abstract class Plugin : IPlugin, OnIssueDetectListener {
     }
 
     override fun destroy() {
-        if(status== PLUGIN_START){
+        if (status == PLUGIN_START) {
             stop()
         }
         status = PLUGIN_DESTORY
@@ -49,7 +50,13 @@ abstract class Plugin : IPlugin, OnIssueDetectListener {
     }
 
     override fun onDetectIssue(issue: Issue) {
-        // TODO:
+        issue.plugin = this
+        val content = issue.content
+        content.put(Issue.ISSUE_REPORT_TYPE, issue.type)
+        content.put(Issue.ISSUE_REPORT_TAG, issue.tag)
+        content.put(Issue.ISSUE_REPORT_PROCESS, MatrixUtil.getProcessName(application))
+        content.put(Issue.ISSUE_REPORT_TIME, System.currentTimeMillis())
+        pluginListener?.onReportIssue(issue)
     }
 
     companion object {

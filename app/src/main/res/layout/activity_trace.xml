@@ -6,14 +6,15 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/startMatrix"
+        android:id="@+id/testANR"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="启动Matrix" />
+        android:text="ANR测试（消息处理超过5秒）" />
 
     <Button
-        android:id="@+id/toTrace"
+        android:id="@+id/testIdleHandler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="卡顿检测 和 ANR" />
+        android:text="IdleHandler测试" />
+
 </LinearLayout>

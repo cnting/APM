@@ -23,6 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.TraceActivity"
+            android:label="卡顿检测 和 ANR"/>
     </application>
 
 </manifest>

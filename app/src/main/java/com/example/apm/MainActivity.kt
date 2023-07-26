@@ -1,10 +1,12 @@
 package com.example.apm
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.ComponentActivity
 import com.cnting.apm_lib.Matrix
 import com.cnting.apm_trace_canary.TracePlugin
+import com.example.apm.ui.TraceActivity
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,8 +18,8 @@ class MainActivity : ComponentActivity() {
                 .build()
             matrix.startAllPlugin()
         }
-        findViewById<View>(R.id.update).setOnClickListener {
-            it.requestLayout()
+        findViewById<View>(R.id.toTrace).setOnClickListener {
+            startActivity(Intent(this, TraceActivity::class.java))
         }
     }
 }

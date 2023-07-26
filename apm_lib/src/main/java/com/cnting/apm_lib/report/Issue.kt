@@ -8,8 +8,26 @@ import org.json.JSONObject
  *
  */
 data class Issue(
-    val type: Int = 0,
+    var type: Int = 0,
     val tag: String,
     val key: String? = null,
     val content: JSONObject,
-)
+    var plugin: Plugin? = null
+) {
+    companion object {
+        const val ISSUE_REPORT_TYPE = "type"
+        const val ISSUE_REPORT_TAG = "tag"
+        const val ISSUE_REPORT_PROCESS = "process"
+        const val ISSUE_REPORT_TIME = "time"
+    }
+
+    override fun toString(): String {
+        return String.format(
+            "tag[%s]type[%d];key[%s];content[%s]",
+            tag,
+            type,
+            key,
+            content.toString()
+        )
+    }
+}

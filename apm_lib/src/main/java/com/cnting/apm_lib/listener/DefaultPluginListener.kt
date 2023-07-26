@@ -2,6 +2,7 @@ package com.cnting.apm_lib.listener
 
 import android.util.Log
 import com.cnting.apm_lib.plugin.Plugin
+import com.cnting.apm_lib.report.Issue
 
 /**
  * Created by cnting on 2023/7/25
@@ -26,7 +27,7 @@ class DefaultPluginListener : PluginListener {
         Log.i(tag, "onDestroy:${plugin.getTag()}")
     }
 
-    override fun onReportIssue(plugin: Plugin) {
-        Log.i(tag, "onReportIssue:${plugin.getTag()}")
+    override fun onReportIssue(issue: Issue) {
+        Log.e(tag, "onReportIssue:$issue")
     }
 }
