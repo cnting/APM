@@ -49,11 +49,11 @@ object UiThreadMonitor {
                 return isAlive
             }
 
-            override fun dispatchStart() {
+            override fun dispatchStart(s: String) {
                 UiThreadMonitor.dispatchStart()
             }
 
-            override fun dispatchEnd() {
+            override fun dispatchEnd(s: String) {
                 UiThreadMonitor.dispatchEnd()
             }
         })

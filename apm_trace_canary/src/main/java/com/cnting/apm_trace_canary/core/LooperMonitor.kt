@@ -1,6 +1,5 @@
 package com.cnting.apm_trace_canary.core
 
-import android.os.Build
 import android.os.Looper
 import android.os.MessageQueue.IdleHandler
 import android.os.SystemClock
@@ -8,7 +7,6 @@ import android.util.Log
 import android.util.Printer
 import androidx.annotation.CallSuper
 import com.cnting.apm_lib.util.ReflectUtils
-import java.lang.Exception
 
 /**
  * Created by cnting on 2023/7/24
@@ -127,17 +125,17 @@ abstract class LooperDispatchListener {
     @CallSuper
     fun onDispatchStart(s: String) {
         isHasDispatchStart = true
-        dispatchStart()
+        dispatchStart(s)
     }
 
     @CallSuper
     fun onDispatchEnd(s: String) {
         isHasDispatchStart = false
-        dispatchEnd()
+        dispatchEnd(s)
     }
 
     abstract fun isValid(): Boolean
 
-    abstract fun dispatchStart()
-    abstract fun dispatchEnd()
+    abstract fun dispatchStart(s: String)
+    abstract fun dispatchEnd(s: String)
 }
