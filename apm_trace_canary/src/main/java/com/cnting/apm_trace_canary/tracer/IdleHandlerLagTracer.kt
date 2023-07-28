@@ -30,6 +30,7 @@ class IdleHandlerLagTracer : Tracer() {
 
     override fun onDead() {
         idleHandlerLagHandler?.removeCallbacksAndMessages(null)
+        idleHandlerLagHandlerThread?.quit()
     }
 
     private fun detectIdleHandler() {

@@ -6,53 +6,24 @@ import android.os.Handler
  * Created by cnting on 2023/7/27
  *
  */
-sealed class Msg(val type: Int) {
-    var id: Int = 0
-
-    //wallTime<300ms，聚合成一条数据
-    data class ClusterMsg(
-        var wallTime: Int = 0,
-        var cpuTime: Int = 0,
-        var counts: Int
-    ) : Msg(TYPE_CLUSTER)
-
-    //wallTime>=300ms
-    data class FatMsg(
-        var wallTime: Int = 0,
-        var cpuTime: Int = 0,
-        var target: Handler?,
-        var callback: Runnable?,
-        var stackTrace: String?
-    ) : Msg(TYPE_FAT)
-
-    //四大组件的消息
-    //msg.target=ActivityThread.H
-    data class SystemMsg(
-        var target: Handler?,
-        var callback: Runnable?,
-        var what: Int
-    ) : Msg(TYPE_SYSTEM)
-
-    //正在调用的消息
-    data class CurMsg(
-        var wallTime: Int = 0,
-        var cpuTime: Int = 0,
-    ) : Msg(TYPE_CUR)
-
-    //未执行的消息
-    data class PendingMsg(
-        var waitingTime: Long,
-        var target: Handler?,
-        var callback: Runnable?,
-        var what: Int
-    ) : Msg(TYPE_PENDING)
-
+data class Msg(
+    val type: Int,
+    var wallTime: Long = 0,
+    var cpuTime: Long = 0,
+    var count: Int = 0,  //聚合消息的个数
+    var target: String? = null,
+    var callback: String? = null,
+    var what: String? = null,
+    var stackTrace: String? = null,
+    var waitingTime: Long? = 0,
+) {
     companion object {
-        const val TYPE_CLUSTER = 0
-        const val TYPE_FAT = 1
-        const val TYPE_SYSTEM = 2
-        const val TYPE_CUR = 3
-        const val TYPE_PENDING = 4
+        const val TYPE_CLUSTER = 0  //wallTime<300ms，聚合成一条数据
+        const val TYPE_FAT = 1      //wallTime>=300ms
+        const val TYPE_SYSTEM = 2   //系统组件的消息 msg.target=ActivityThread.H
+        const val TYPE_CUR = 3      //正在调用的消息
+        const val TYPE_PENDING = 4  //未执行的消息
+        const val TYPE_GAP = 5      //两条消息gap时间>=50ms
     }
 }
 

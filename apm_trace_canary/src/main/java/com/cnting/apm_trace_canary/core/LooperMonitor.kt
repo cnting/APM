@@ -7,6 +7,7 @@ import android.util.Log
 import android.util.Printer
 import androidx.annotation.CallSuper
 import com.cnting.apm_lib.util.ReflectUtils
+import com.cnting.apm_trace_canary.history.LooperHistory
 
 /**
  * Created by cnting on 2023/7/24
@@ -37,12 +38,20 @@ class LooperMonitor(private val looper: Looper) : IdleHandler {
 
     private val listeners = mutableSetOf<LooperDispatchListener>()
     private var printer: LooperPrinter? = null
+    private lateinit var looperHistory: LooperHistory
     private var isReflectPrinterError = false
     private var lastCheckPrinterTime = 0L
+    private val dispatchTimeMs = LongArray(4)
 
     init {
         resetPrinter()
         addIdleHandler()
+        addLooperHistory()
+    }
+
+    private fun addLooperHistory() {
+        looperHistory = LooperHistory()
+        addListener(looperHistory)
     }
 
     @Synchronized
@@ -77,21 +86,44 @@ class LooperMonitor(private val looper: Looper) : IdleHandler {
     }
 
     private fun dispatch(isBegin: Boolean, s: String) {
+        //时间方法介绍：https://juejin.cn/post/6844904147628589070
+        //System.nanoTime()：android系统开机到当前的时间，返回纳秒
+        //SystemClock.currentThreadTimeMillis()：线程running的时间，线程Sleep的时间不会计入。
+        if (isBegin) {
+            dispatchTimeMs[0] = System.nanoTime()
+            dispatchTimeMs[1] = SystemClock.currentThreadTimeMillis()
+        } else {
+            dispatchTimeMs[2] = System.nanoTime()
+            dispatchTimeMs[3] = SystemClock.currentThreadTimeMillis()
+        }
         listeners.forEach {
             if (it.isValid()) {
                 if (isBegin) {
                     if (!it.isHasDispatchStart) {
-                        it.onDispatchStart(s)
+                        it.onDispatchStart(s, dispatchTimeMs[0], dispatchTimeMs[1])
                     }
                 } else {
                     if (it.isHasDispatchStart) {
-                        it.onDispatchEnd(s)
+                        it.onDispatchEnd(
+                            s,
+                            dispatchTimeMs[0],
+                            dispatchTimeMs[1],
+                            dispatchTimeMs[2],
+                            dispatchTimeMs[3]
+                        )
                     }
                 }
             } else if (!isBegin && it.isHasDispatchStart) {
-                it.onDispatchEnd(s)
+                it.onDispatchEnd(
+                    s,
+                    dispatchTimeMs[0],
+                    dispatchTimeMs[1],
+                    dispatchTimeMs[2],
+                    dispatchTimeMs[3]
+                )
             }
         }
+
     }
 
     override fun queueIdle(): Boolean {
@@ -123,19 +155,30 @@ abstract class LooperDispatchListener {
     var isHasDispatchStart = false
 
     @CallSuper
-    fun onDispatchStart(s: String) {
+    fun onDispatchStart(s: String, beginNs: Long, cpuBeginMs: Long) {
         isHasDispatchStart = true
-        dispatchStart(s)
+        dispatchStart(s, beginNs, cpuBeginMs)
     }
 
     @CallSuper
-    fun onDispatchEnd(s: String) {
+    fun onDispatchEnd(
+        s: String,
+        beginNs: Long,
+        cpuBeginMs: Long,
+        endNs: Long,
+        cpuEndMs: Long
+    ) {
         isHasDispatchStart = false
-        dispatchEnd(s)
+        dispatchEnd(s, beginNs, cpuBeginMs, endNs, cpuEndMs)
     }
 
     abstract fun isValid(): Boolean
 
-    abstract fun dispatchStart(s: String)
-    abstract fun dispatchEnd(s: String)
+    abstract fun dispatchStart(s: String, beginNs: Long, cpuBeginMs: Long)
+    abstract fun dispatchEnd(
+        s: String, beginNs: Long,
+        cpuBeginMs: Long,
+        endNs: Long,
+        cpuEndMs: Long
+    )
 }

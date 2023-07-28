@@ -38,7 +38,6 @@ object UiThreadMonitor {
     private var queueCost: LongArray? = null
     private val observers = mutableSetOf<LooperObserver>()
     private var token: Long = 0
-    private val dispatchTimeMs = LongArray(4)
 
     fun init() {
         if (isInit) return
@@ -49,13 +48,20 @@ object UiThreadMonitor {
                 return isAlive
             }
 
-            override fun dispatchStart(s: String) {
-                UiThreadMonitor.dispatchStart()
+            override fun dispatchStart(s: String, beginNs: Long, cpuBeginMs: Long) {
+                dispatchStart(beginNs, cpuBeginMs)
             }
 
-            override fun dispatchEnd(s: String) {
-                UiThreadMonitor.dispatchEnd()
+            override fun dispatchEnd(
+                s: String,
+                beginNs: Long,
+                cpuBeginMs: Long,
+                endNs: Long,
+                cpuEndMs: Long
+            ) {
+                dispatchEnd(beginNs, cpuBeginMs, endNs, cpuEndMs)
             }
+
         })
         isInit = true
         choreographer = Choreographer.getInstance()
@@ -213,22 +219,24 @@ object UiThreadMonitor {
         callbackExist!![type] = false
     }
 
-    private fun dispatchStart() {
-        token = System.nanoTime()
-        dispatchTimeMs[0] = token
-        dispatchTimeMs[2] = SystemClock.currentThreadTimeMillis()
+    private fun dispatchStart(beginNs: Long, cpuBeginMs: Long) {
+        token = beginNs
         observers.forEach {
             if (!it.isDispatchBegin) {
-                it.dispatchBegin(dispatchTimeMs[0], dispatchTimeMs[2], token)
+                it.dispatchBegin(beginNs, cpuBeginMs, token)
             }
         }
     }
 
-    private fun dispatchEnd() {
+    private fun dispatchEnd(
+        beginNs: Long,
+        cpuBeginMs: Long,
+        endNs: Long,
+        cpuEndMs: Long
+    ) {
         doFrameEnd()
         val startNs = token
         val intendedFrameTimeNs = getIntendedFrameTimeNs(startNs)
-        val endNs = System.nanoTime()
         observers.forEach {
             if (it.isDispatchBegin) {
                 it.doFrame(
@@ -243,13 +251,10 @@ object UiThreadMonitor {
                 )
             }
         }
-        dispatchTimeMs[1] = System.nanoTime()
-        dispatchTimeMs[3] = SystemClock.currentThreadTimeMillis()
         observers.forEach {
             if (it.isDispatchBegin) {
                 it.dispatchEnd(
-                    dispatchTimeMs[0], dispatchTimeMs[2], dispatchTimeMs[1],
-                    dispatchTimeMs[3], token, isVsyncFrame
+                    beginNs, cpuBeginMs, endNs, cpuEndMs, token, isVsyncFrame
                 )
             }
         }

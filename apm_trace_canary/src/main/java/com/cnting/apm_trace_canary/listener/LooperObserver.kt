@@ -29,8 +29,8 @@ abstract class LooperObserver {
 
     open fun doFrame(
         focusActivity: String,
-        startNs: Long,
-        endNs: Long,
+        startMs: Long,
+        endMs: Long,
         isVsyncFrame: Boolean,
         intendedFrameTimeNs: Long,
         inputCostNs: Long,

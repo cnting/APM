@@ -27,4 +27,8 @@ object MessageUtil {
             target, callback, what
         )
     }
+
+    fun isSystemMessage(message: BoxMessage):Boolean{
+        return message.target!=null && message.target.contains("android.app.ActivityThread\$H")
+    }
 }
