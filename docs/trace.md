@@ -1,6 +1,12 @@
 ## 1. 卡顿 & ANR
 
-卡顿产生的原因是 `doFrame` 的消息无法在 `vsync` 的时间间隔内完成执行，而 `ANR` 是因为关键的系统消息 或者 `Input` 事件无法在系统定义的超时阈值内完成执行。
+卡顿产生的原因是 `doFrame` 的消息无法在 `vsync` 的时间间隔内完成执行
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8e958016c83a49ecbba370e407156a5d~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
+
+而 `ANR` 是因为关键的系统消息 或者 `Input` 事件无法在系统定义的超时阈值内完成执行。
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1d805a9a64494aa38d4e4a1e2d2b0613~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
 
 ## 2. 卡顿检测
 
