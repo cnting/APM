@@ -18,9 +18,15 @@
 
 ### 2.3 IdleHandler、TouchEvent、SyncBarrier检测
 
-[Idle、TouchEvent、SyncBarrier 检测](https://mp.weixin.qq.com/s/3dubi2GVW_rVFZZztCpsKg)
+检测方法：[Idle、TouchEvent、SyncBarrier 检测](https://mp.weixin.qq.com/s/3dubi2GVW_rVFZZztCpsKg)
+
+具体实现看 `IdleHandlerLagTracer.kt`
+
+
 
 ### 2.4 记录消息队列调度历史 
+
+最终实现看 `LooperAnrTracer.kt`
 
 #### 2.4.1 [消息分类](https://juejin.cn/post/7136008620658917407#heading-6)
 
@@ -52,8 +58,6 @@
 使用 `Looper#dump()`
 
 
-
-最终实现看 `LooperAnrTracer.kt`
 
 参考：
 
