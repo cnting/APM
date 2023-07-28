@@ -8,7 +8,7 @@ import com.cnting.apm_lib.report.Issue
  * Created by cnting on 2023/7/25
  *
  */
-class DefaultPluginListener : PluginListener {
+open class DefaultPluginListener : PluginListener {
     private val tag = "PluginListener"
 
     override fun onInit(plugin: Plugin) {

@@ -10,7 +10,9 @@ import com.cnting.apm_trace_canary.listener.LooperObserver
 abstract class Tracer : ITracer, LooperObserver() {
 
     @Volatile
-    private var isAlive = false
+    protected var isAlive = false
+        private set
+
     override fun onStartTrace() {
         if (!isAlive) {
             isAlive = true
@@ -24,6 +26,7 @@ abstract class Tracer : ITracer, LooperObserver() {
             onDead()
         }
     }
+
 
     abstract fun onAlive()
     abstract fun onDead()

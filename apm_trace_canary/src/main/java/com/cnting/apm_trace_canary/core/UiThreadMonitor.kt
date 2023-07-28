@@ -49,7 +49,7 @@ object UiThreadMonitor {
             }
 
             override fun dispatchStart(s: String, beginNs: Long, cpuBeginMs: Long) {
-                dispatchStart(beginNs, cpuBeginMs)
+                UiThreadMonitor.dispatchStart(s, beginNs, cpuBeginMs)
             }
 
             override fun dispatchEnd(
@@ -59,7 +59,7 @@ object UiThreadMonitor {
                 endNs: Long,
                 cpuEndMs: Long
             ) {
-                dispatchEnd(beginNs, cpuBeginMs, endNs, cpuEndMs)
+                UiThreadMonitor.dispatchEnd(s, beginNs, cpuBeginMs, endNs, cpuEndMs)
             }
 
         })
@@ -98,24 +98,6 @@ object UiThreadMonitor {
         }
         vsyncReceiver =
             ReflectUtils.reflectObject(choreographer, "mDisplayEventReceiver", null)
-
-        addObserver(object : LooperObserver() {
-            override fun doFrame(
-                focusActivity: String,
-                startNs: Long,
-                endNs: Long,
-                isVsyncFrame: Boolean,
-                intendedFrameTimeNs: Long,
-                inputCostNs: Long,
-                animationCostNs: Long,
-                traversalCostNs: Long
-            ) {
-                Log.i(
-                    TAG,
-                    "focusedActivity[${focusActivity}] frame cost:${(endNs - startNs) / Constants.TIME_MILLIS_TO_NANO}ms isVsyncFrame=${isVsyncFrame} intendedFrameTimeNs=${intendedFrameTimeNs} [${inputCostNs}|${animationCostNs}|${traversalCostNs}]ns",
-                )
-            }
-        })
     }
 
     fun addObserver(observer: LooperObserver) {
@@ -219,16 +201,17 @@ object UiThreadMonitor {
         callbackExist!![type] = false
     }
 
-    private fun dispatchStart(beginNs: Long, cpuBeginMs: Long) {
+    private fun dispatchStart(s: String, beginNs: Long, cpuBeginMs: Long) {
         token = beginNs
         observers.forEach {
             if (!it.isDispatchBegin) {
-                it.dispatchBegin(beginNs, cpuBeginMs, token)
+                it.dispatchBegin(s, beginNs, cpuBeginMs, token)
             }
         }
     }
 
     private fun dispatchEnd(
+        s: String,
         beginNs: Long,
         cpuBeginMs: Long,
         endNs: Long,
@@ -254,7 +237,7 @@ object UiThreadMonitor {
         observers.forEach {
             if (it.isDispatchBegin) {
                 it.dispatchEnd(
-                    beginNs, cpuBeginMs, endNs, cpuEndMs, token, isVsyncFrame
+                    s, beginNs, cpuBeginMs, endNs, cpuEndMs, token, isVsyncFrame
                 )
             }
         }

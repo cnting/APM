@@ -11,12 +11,13 @@ abstract class LooperObserver {
         private set
 
     @CallSuper
-    open fun dispatchBegin(beginNs: Long, cpuBeginNs: Long, token: Long) {
+    open fun dispatchBegin(s: String, beginNs: Long, cpuBeginMs: Long, token: Long) {
         isDispatchBegin = true
     }
 
     @CallSuper
     open fun dispatchEnd(
+        s: String,
         beginNs: Long,
         cpuBeginMs: Long,
         endNs: Long,

@@ -47,6 +47,7 @@ public class SharePluginInfo {
     public static final String ISSUE_COST = "cost";
     public static final String ISSUE_CPU_USAGE = "usage";
     public static final String ISSUE_STACK_TYPE = "detail";
+    public static final String ISSUE_EXTRA = "extra";
     public static final String ISSUE_IS_WARM_START_UP = "is_warm_start_up";
     public static final String ISSUE_SUB_TYPE = "subType";
     public static final String STAGE_APPLICATION_CREATE = "application_create";

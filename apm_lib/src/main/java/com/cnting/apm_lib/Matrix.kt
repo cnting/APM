@@ -65,8 +65,9 @@ class Matrix private constructor(
             return this
         }
 
-        fun pluginListener(listener: PluginListener) {
+        fun pluginListener(listener: PluginListener): Builder {
             this.pluginListener = listener
+            return this
         }
 
         fun build(): Matrix {

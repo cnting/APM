@@ -27,9 +27,4 @@ object HistoryConstants {
      * 两条消息时间间隔超过这个值，生成一条消息
      */
     const val GAP_TIME = 50
-
-    /**
-     * 超过这个时间可直接判定为anr
-     */
-    const val ANR_TIME: Long = 3000
 }

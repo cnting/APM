@@ -7,7 +7,6 @@ import android.util.Log
 import android.util.Printer
 import androidx.annotation.CallSuper
 import com.cnting.apm_lib.util.ReflectUtils
-import com.cnting.apm_trace_canary.history.LooperHistory
 
 /**
  * Created by cnting on 2023/7/24
@@ -38,7 +37,6 @@ class LooperMonitor(private val looper: Looper) : IdleHandler {
 
     private val listeners = mutableSetOf<LooperDispatchListener>()
     private var printer: LooperPrinter? = null
-    private lateinit var looperHistory: LooperHistory
     private var isReflectPrinterError = false
     private var lastCheckPrinterTime = 0L
     private val dispatchTimeMs = LongArray(4)
@@ -46,12 +44,6 @@ class LooperMonitor(private val looper: Looper) : IdleHandler {
     init {
         resetPrinter()
         addIdleHandler()
-        addLooperHistory()
-    }
-
-    private fun addLooperHistory() {
-        looperHistory = LooperHistory()
-        addListener(looperHistory)
     }
 
     @Synchronized
