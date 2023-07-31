@@ -27,9 +27,4 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private val pluginListener = object : DefaultPluginListener() {
-        override fun onReportIssue(issue: Issue) {
-            super.onReportIssue(issue)
-        }
-    }
 }

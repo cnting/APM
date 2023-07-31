@@ -1,6 +1,9 @@
 package com.cnting.apm_lib.listener
 
 import android.util.Log
+import com.cnting.apm_lib.db.APMDatabase
+import com.cnting.apm_lib.db.DBRepository
+import com.cnting.apm_lib.db.IssueEntity
 import com.cnting.apm_lib.plugin.Plugin
 import com.cnting.apm_lib.report.Issue
 
@@ -8,7 +11,7 @@ import com.cnting.apm_lib.report.Issue
  * Created by cnting on 2023/7/25
  *
  */
-open class DefaultPluginListener : PluginListener {
+open class DefaultPluginListener(private val dbRepository: DBRepository) : PluginListener {
     private val tag = "PluginListener"
 
     override fun onInit(plugin: Plugin) {
@@ -29,5 +32,6 @@ open class DefaultPluginListener : PluginListener {
 
     override fun onReportIssue(issue: Issue) {
         Log.e(tag, "onReportIssue:$issue")
+        dbRepository.saveIssue(issue)
     }
 }

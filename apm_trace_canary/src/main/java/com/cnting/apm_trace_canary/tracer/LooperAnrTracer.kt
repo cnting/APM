@@ -21,6 +21,9 @@ import com.cnting.apm_trace_canary.bean.Msg
 import com.cnting.apm_trace_canary.util.FIFOQueue
 import com.cnting.apm_trace_canary.util.MessageUtil
 import com.cnting.apm_trace_canary.util.Utils
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import org.json.JSONArray
 import org.json.JSONObject
 
 /**
@@ -42,6 +45,7 @@ class LooperAnrTracer : Tracer() {
     private var monitorReportAnrTime: Long = 0
     private var lastMsgEndNs: Long = -1
     private var curBoxMessage: BoxMessage? = null
+    private val gson = Gson()
 
     override fun onAlive() {
         UiThreadMonitor.addObserver(this)
@@ -168,7 +172,7 @@ class LooperAnrTracer : Tracer() {
             }
         }
 
-        private fun updateReportAnrTimeFromNow(){
+        private fun updateReportAnrTimeFromNow() {
             reportAnrTime = SystemClock.elapsedRealtime() + Constants.DEFAULT_ANR
         }
     }
@@ -197,13 +201,17 @@ class LooperAnrTracer : Tracer() {
         jsonObject.put(SharePluginInfo.ISSUE_PROCESS_PRIORITY, processStat[0])
         jsonObject.put(SharePluginInfo.ISSUE_PROCESS_NICE, processStat[1])
         jsonObject.put(SharePluginInfo.ISSUE_PROCESS_FOREGROUND, isForeground)
-        jsonObject.put(SharePluginInfo.ISSUE_EXTRA, msgQueue)
+
         // memory info
         val memJsonObject = JSONObject()
         memJsonObject.put(SharePluginInfo.ISSUE_MEMORY_DALVIK, memoryInfo[0])
         memJsonObject.put(SharePluginInfo.ISSUE_MEMORY_NATIVE, memoryInfo[1])
         memJsonObject.put(SharePluginInfo.ISSUE_MEMORY_VM_SIZE, memoryInfo[2])
         jsonObject.put(SharePluginInfo.ISSUE_MEMORY, memJsonObject)
+
+        // msgQueue
+        val queueObject = gson.toJson(msgQueue, object : TypeToken<ArrayList<Msg>>() {}.type)
+        jsonObject.put(SharePluginInfo.ISSUE_EXTRA, JSONArray(queueObject))
 
         val issue = Issue(
             key = curBoxMessage?.beginNs?.toString(),
