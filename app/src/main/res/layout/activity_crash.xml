@@ -6,14 +6,8 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/toTrace"
+        android:id="@+id/toNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="卡顿检测 和 ANR" />
-
-    <Button
-        android:id="@+id/toCrash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="异常检测" />
+        android:text="进入下一个页面" />
 </LinearLayout>

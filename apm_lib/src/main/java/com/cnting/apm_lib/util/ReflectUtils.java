@@ -38,7 +38,7 @@ public class ReflectUtils {
                 field.setAccessible(true);
                 return (T) field.get(instance);
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
             }
         } else {
             try {
@@ -46,7 +46,7 @@ public class ReflectUtils {
                 field.setAccessible(true);
                 return (T) field.get(instance);
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
             }
         }
         return defaultValue;

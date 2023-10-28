@@ -1,4 +1,4 @@
-package com.example.apm.ui
+package com.example.apm.ui.trace
 
 import android.os.Bundle
 import android.os.Handler

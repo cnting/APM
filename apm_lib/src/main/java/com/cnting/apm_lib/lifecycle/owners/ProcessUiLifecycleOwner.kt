@@ -25,12 +25,18 @@ object ProcessUiLifecycleOwner {
 
     private fun attach(application: Application) {
         application.registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
+            var bufferCount = 0
+
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
             }
 
             override fun onActivityStarted(activity: Activity) {
                 updateScene(activity)
-                startCounter++
+                if (bufferCount < 0) {
+                    bufferCount++
+                } else {
+                    startCounter++
+                }
             }
 
             override fun onActivityResumed(activity: Activity) {
@@ -42,7 +48,11 @@ object ProcessUiLifecycleOwner {
             }
 
             override fun onActivityStopped(activity: Activity) {
-                startCounter--
+                if (activity.isChangingConfigurations) {
+                    bufferCount--
+                } else {
+                    startCounter--
+                }
             }
 
             override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
