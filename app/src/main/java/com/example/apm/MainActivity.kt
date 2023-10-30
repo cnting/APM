@@ -21,4 +21,9 @@ class MainActivity : ComponentActivity() {
 
     }
 
+    companion object{
+        init {
+         System.loadLibrary("apm")
+      }
+    }
 }

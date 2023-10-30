@@ -14,8 +14,13 @@ class CrashActivity2 : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crash2)
-        findViewById<Button>(R.id.toCrash).setOnClickListener {
+        findViewById<Button>(R.id.toJavaCrash).setOnClickListener {
             Integer.parseInt("0x01")
         }
+        findViewById<Button>(R.id.toNativeCrash).setOnClickListener {
+            nativeCrash()
+        }
     }
+
+    external fun nativeCrash()
 }

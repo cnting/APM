@@ -6,8 +6,14 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/toCrash"
+        android:id="@+id/toJavaCrash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="抛出异常" />
+        android:text="抛出java异常" />
+
+    <Button
+        android:id="@+id/toNativeCrash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="抛出native异常" />
 </LinearLayout>

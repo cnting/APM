@@ -1,9 +1,12 @@
 package com.cnting.apm_crash
 
 import android.app.Application
-import com.cnting.apm_crash.crash.CrashMonitor
+import com.cnting.apm_crash.crash.JavaCrashMonitor
+import com.cnting.apm_crash.crash.NativeCrashCallback
+import com.cnting.apm_crash.crash.NativeCrashMonitor
 import com.cnting.apm_lib.listener.PluginListener
 import com.cnting.apm_lib.plugin.Plugin
+import java.lang.Error
 
 /**
  * Created by cnting on 2023/10/28
@@ -11,16 +14,20 @@ import com.cnting.apm_lib.plugin.Plugin
  */
 class CrushPlugin(private val config: CrashPluginConfig) : Plugin() {
 
-    private lateinit var crashMonitor: CrashMonitor
+    private lateinit var javaCrashMonitor: JavaCrashMonitor
 
     override fun init(application: Application, pluginListener: PluginListener) {
         super.init(application, pluginListener)
-        crashMonitor = CrashMonitor(application, config)
+        javaCrashMonitor = JavaCrashMonitor(application, config)
     }
 
     override fun start() {
         super.start()
-        crashMonitor.start()
+        javaCrashMonitor.start()
+        NativeCrashMonitor.init(object : NativeCrashCallback {
+            override fun onCrash(threadName: String, error: Error) {
+            }
+        })
     }
 }
 

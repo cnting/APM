@@ -3,14 +3,13 @@ package com.cnting.apm_crash.crash
 import android.app.Application
 import android.os.Looper
 import android.os.MessageQueue
-import android.util.Log
 import com.cnting.apm_crash.CrashPluginConfig
 
 /**
  * Created by cnting on 2023/10/28
  *
  */
-class CrashMonitor(private val application: Application, private val config: CrashPluginConfig) :
+class JavaCrashMonitor(private val application: Application, private val config: CrashPluginConfig) :
     MessageQueue.IdleHandler {
     fun start() {
         Looper.myQueue().addIdleHandler(this)
