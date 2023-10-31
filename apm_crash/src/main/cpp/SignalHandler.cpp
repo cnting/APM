@@ -6,10 +6,9 @@
 #include <unistd.h>
 #include <algorithm>
 #include "SignalHandler.h"
+#include "CrashAnalyser.h"
 
 void signalPass(int code, siginfo_t *si, void *sc) {
-    LOGE("监听到了native的崩溃:%d", code);
-
     /**
      * 这里要考虑非信号方式防止死锁
      * SIG_DFL是默认的处理函数，将code和SIGALRM都设置为默认的处理函数，就不会再调用signalPass()了，保证这个方法只调用一次
@@ -20,6 +19,7 @@ void signalPass(int code, siginfo_t *si, void *sc) {
     (void) alarm(8);
 
     //解析栈信息
+    notifyCaughtSignal(code, si, sc);
 
     //给系统原来默认的处理，否则就会进入死循环
     oldHandlers[code].sa_sigaction(code, si, sc);
@@ -60,6 +60,7 @@ bool installSignalHandlers() {
 
     return true;
 }
+
 /**
  * 如果异常是由于栈溢出引起的，系统在同一个已经满了的栈上调用SIGSEGV的信号处理函数，会再一次引起同样的信号。
  * 这里设置额外的栈空间，保留一下在紧急情况下使用的空间。（系统会在危险情况下把栈指针指向这个地方，使得可以在一个新的栈上运行信号处理函数）

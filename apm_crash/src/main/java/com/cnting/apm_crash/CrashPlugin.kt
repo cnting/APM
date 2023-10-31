@@ -1,6 +1,7 @@
 package com.cnting.apm_crash
 
 import android.app.Application
+import android.util.Log
 import com.cnting.apm_crash.crash.JavaCrashMonitor
 import com.cnting.apm_crash.crash.NativeCrashCallback
 import com.cnting.apm_crash.crash.NativeCrashMonitor
@@ -26,6 +27,7 @@ class CrushPlugin(private val config: CrashPluginConfig) : Plugin() {
         javaCrashMonitor.start()
         NativeCrashMonitor.init(object : NativeCrashCallback {
             override fun onCrash(threadName: String, error: Error) {
+                Log.e("CrashPlugin", "threadName:$threadName,error:${error.message}")
             }
         })
     }

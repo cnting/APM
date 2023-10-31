@@ -1,11 +1,31 @@
 #include <jni.h>
 #include "SignalHandler.h"
 #include "CrashDefine.h"
+#include "JNIBridge.h"
+#include <pthread.h>
+#include "CrashAnalyser.h"
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_cnting_apm_1crash_crash_NativeCrashMonitor_nativeInit(JNIEnv *env, jobject thiz,
+Java_com_cnting_apm_1crash_crash_NativeCrashMonitor_nativeInit(JNIEnv *env,
+                                                               jobject nativeCrashMonitor,
                                                                jobject callback) {
+    callback = env->NewGlobalRef(callback);
+    JavaVM *javaVm;
+    env->GetJavaVM(&javaVm);
+
+    jclass nativeCrashMonitorClass = env->GetObjectClass(nativeCrashMonitor);
+    nativeCrashMonitorClass = static_cast<jclass>(env->NewGlobalRef(nativeCrashMonitorClass));
+
+    JNIBridge *jniBridge = new JNIBridge(javaVm, callback, nativeCrashMonitorClass);
+    //创建一个线程去监听是否有异常
+    initCondition();
+    pthread_t pthread;
+    int ret = pthread_create(&pthread, nullptr, threadCrashMonitor, jniBridge);
+    if (ret) {
+        LOGE("pthread_create error,return %d", ret);
+    }
+
 }
 extern "C"
 JNIEXPORT void JNICALL

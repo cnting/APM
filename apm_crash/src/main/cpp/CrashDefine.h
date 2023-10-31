@@ -9,9 +9,12 @@
 #include "android/log.h"
 
 #define TAG "JNI_TAG"
+#define PROCESS_NAME_LENGTH 512
+#define THREAD_NAME_LENGTH 512
+#define BACKTRACE_FRAMES_MAX 32
+
 # define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, TAG, __VA_ARGS__)
 # define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, TAG, __VA_ARGS__)
-
 //异常信号量
 const int exceptionSignals[] = {
         SIGSEGV, //段错误，访问无效内存或无权访问内存
