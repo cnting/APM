@@ -23,6 +23,7 @@ public:
 
     void throwExceptionToJava(struct native_crash_info_struct *nativeCrashInfo);
 
+
 private:
 };
 

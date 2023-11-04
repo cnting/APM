@@ -14,7 +14,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         val matrix = Matrix.Builder(this)
-            .plugin(TracePlugin())
+//            .plugin(TracePlugin())
             .plugin(CrushPlugin(CrashPluginConfig(homeActivityName = MainActivity::class.java.name)))
 //                .pluginListener(pluginListener)
             .build()

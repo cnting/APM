@@ -6,6 +6,12 @@
     android:orientation="vertical">
 
     <Button
+        android:id="@+id/anrWatchDogBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ANRWatchDog已停止" />
+
+    <Button
         android:id="@+id/testANR"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,5 +22,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="IdleHandler测试" />
+
 
 </LinearLayout>
