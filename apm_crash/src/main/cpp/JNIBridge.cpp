@@ -2,6 +2,9 @@
 // Created by cnting on 2023/10/30.
 //
 #include "JNIBridge.h"
+#include "stringprintf.h"
+#include "mylog.h"
+
 
 JNIBridge::JNIBridge(JavaVM *javaVm, jobject callbackObj, jclass nativeCrashMonitorClass) {
     this->javaVm = javaVm;

@@ -181,50 +181,6 @@ const char *desc_sig(int sig, int code) {
     }
 }
 
-const char *getProcessName(pid_t pid) {
-    if (pid <= 1) {
-        return NULL;
-    }
-    char *path = (char *) calloc(1, PATH_MAX);
-    char *line = (char *) calloc(1, PROCESS_NAME_LENGTH);
-    snprintf(path, PATH_MAX, "proc/%d/cmdline", pid);
-    FILE *cmdFile = NULL;
-    if ((cmdFile = fopen(path, "r"))) {
-        fgets(line, PROCESS_NAME_LENGTH, cmdFile);
-        fclose(cmdFile);
-    }
-    if (line) {
-        int length = strlen(line);
-        if (line[length - 1] == '\n') {
-            line[length - 1] = '\0';
-        }
-    }
-    free(path);
-    return line;
-}
-
-const char *getThreadName(pid_t tid) {
-    if (tid <= 1) {
-        return NULL;
-    }
-    char *path = (char *) calloc(1, PATH_MAX);
-    char *line = (char *) calloc(1, THREAD_NAME_LENGTH);
-    snprintf(path, THREAD_NAME_LENGTH, "proc/%d/comm", tid);
-    FILE *commFile = NULL;
-    if ((commFile = fopen(path, "r"))) {
-        fgets(line, THREAD_NAME_LENGTH, commFile);
-        fclose(commFile);
-    }
-    if (line) {
-        int length = strlen(line);
-        if (line[length - 1] == '\n') {
-            line[length - 1] = '\0';
-        }
-    }
-    free(path);
-    return line;
-}
-
 bool is_dll(const char *name) {
     for (int i = 0; name[i] != '\0'; i++) {
         if (name[i + 0] == '.' && name[i + 1] == 's' && name[i + 2] == 'o'

@@ -15,20 +15,21 @@ project("apm_crash")
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 
+
+aux_source_directory(${PROJECT_SOURCE_DIR}/../../../../apm_lib_native/src/main/cpp/util SRC_DIR_UTIL)
+include_directories(${PROJECT_SOURCE_DIR}/../../../../apm_lib_native/src/main/cpp/util)
+
+aux_source_directory(. SRC_DIR)
+
 add_library( # Sets the name of the library.
         apm_crash
 
         # Sets the library as a shared library.
         SHARED
 
-        # Provides a relative path to your source file(s).
-        apm_crash.cpp
-
-        SignalHandler.cpp
-        JNIBridge.cpp
-        CrashAnalyser.cpp
-        Utils.cpp
-        stringprintf.cpp)
+        ${SRC_DIR}
+        ${SRC_DIR_UTIL}
+        )
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by

@@ -6,12 +6,11 @@
 #include <unwind.h>
 #include <dlfcn.h>
 #include "CrashAnalyser.h"
+#include "ThreadUtil.h"
 
 //锁的条件变量
 pthread_cond_t signalCond;
 pthread_mutex_t signalLock;
-pthread_cond_t exceptionCond;
-pthread_mutex_t exceptionLock;
 
 //记录信息
 native_crash_info *nativeCrashInfo;
@@ -19,9 +18,7 @@ native_crash_info *nativeCrashInfo;
 void initCondition() {
     nativeCrashInfo = static_cast<native_crash_info *>(malloc(sizeof(native_crash_info)));
     pthread_mutex_init(&signalLock, NULL);
-    pthread_mutex_init(&exceptionLock, NULL);
     pthread_cond_init(&signalCond, NULL);
-    pthread_cond_init(&exceptionCond, NULL);
 }
 
 /**

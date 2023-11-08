@@ -8,7 +8,6 @@
 #include "jni.h"
 #include "CrashDefine.h"
 #include "CrashAnalyser.h"
-#include "stringprintf.h"
 #include <string>
 #include <dlfcn.h>
 

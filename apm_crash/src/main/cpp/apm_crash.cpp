@@ -4,6 +4,7 @@
 #include "JNIBridge.h"
 #include <pthread.h>
 #include "CrashAnalyser.h"
+#include "mylog.h"
 
 extern "C"
 JNIEXPORT void JNICALL

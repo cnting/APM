@@ -11,9 +11,6 @@
 
 extern const char *desc_sig(int sig, int code);
 
-extern const char *getProcessName(pid_t pid);
-
-extern const char *getThreadName(pid_t tid);
 
 bool is_dll(const char *name);
 

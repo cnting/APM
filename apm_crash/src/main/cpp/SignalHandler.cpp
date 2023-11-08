@@ -45,7 +45,6 @@ bool installSignalHandlers() {
     //sa_flags包含SA_SIGINFO时就会调用 sa_sigaction
     sa.sa_flags = SA_ONSTACK | SA_SIGINFO;
 
-    //处理当前信号量时不关心其他的
     for (int i = 0; i < exceptionSignalsNumber; i++) {
         //将 exceptionSignals[i] 信号加到 &sa.sa_mask信号集中
         sigaddset(&sa.sa_mask, exceptionSignals[i]);

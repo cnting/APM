@@ -1,8 +1,10 @@
 #include <jni.h>
 #include <string>
-#include <android/log.h>
+#include <unistd.h>
 #include "dlopen.h"
 #include "inlineHook.h"
+#include "ThreadUtil.h"
+#include "mylog.h"
 
 void *get_contend_monitor;
 void *get_lock_owner_thread_id;
@@ -96,7 +98,9 @@ void *new_create_callback(void *arg) {
     long startTime = time(NULL);
     void *result = old_create_callback(arg);
     long aliveTime = time(NULL) - startTime;
-    __android_log_print(ANDROID_LOG_ERROR, "TAG", "线程执行完毕，存活时间 -> %lds", aliveTime);
+    LOGE("线程执行完毕，存活时间 -> %lds", aliveTime);
+    const char *thread_info = getThreadRunInfo(getpid(), gettid());
+    LOGE("thread_info -> %s", thread_info);
     return result;
 }
 
