@@ -6,8 +6,7 @@ import android.os.HandlerThread
 import android.os.Looper
 import android.os.Message
 import android.os.SystemClock
-import android.util.Log
-import com.cnting.apm_lib.Matrix
+import com.cnting.apm_lib.APM
 import com.cnting.apm_lib.lifecycle.owners.ProcessUiLifecycleOwner
 import com.cnting.apm_lib.report.Issue
 import com.cnting.apm_lib.util.DeviceUtil
@@ -192,9 +191,9 @@ class LooperAnrTracer : Tracer() {
         //memory
         val memoryInfo = dumpMemory()
 
-        val plugin = Matrix.with().getPluginByClass(TracePlugin::class.java) ?: return
+        val plugin = APM.with().getPluginByClass(TracePlugin::class.java) ?: return
         var jsonObject = JSONObject()
-        jsonObject = DeviceUtil.getDeviceInfo(jsonObject, Matrix.with().application)
+        jsonObject = DeviceUtil.getDeviceInfo(jsonObject, APM.with().application)
         jsonObject.put(SharePluginInfo.ISSUE_STACK_TYPE, Constants.Type.ANR)
         jsonObject.put(SharePluginInfo.ISSUE_SCENE, scene)
         jsonObject.put(SharePluginInfo.ISSUE_THREAD_STACK, dumpStack)

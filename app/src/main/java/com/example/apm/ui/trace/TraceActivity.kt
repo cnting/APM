@@ -51,8 +51,9 @@ class TraceActivity : ComponentActivity() {
             }
         })
 
-        //测试在onCreate是否会ANR，会出现
-//        Thread.sleep(30 * 1000)
+        //测试在onCreate是否会ANR，会出现。
+        //也是Input类型ANR，InputDispatcher发送key事件给 对应的进程的 Focused Window ，对应的window不存在、处于暂停态、或通道(input channel)占满、通道未注册、通道异常、或5s内没有处理完一个事件，就会发生ANR
+        Thread.sleep(5 * 1000)
     }
 
     override fun onStop() {

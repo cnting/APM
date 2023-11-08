@@ -8,7 +8,6 @@ import com.cnting.apm_lib.db.DBRepository
 import com.cnting.apm_lib.lifecycle.owners.ProcessUiLifecycleOwner
 import com.cnting.apm_lib.listener.DefaultPluginListener
 import com.cnting.apm_lib.listener.PluginListener
-import com.cnting.apm_lib.plugin.IPlugin
 import com.cnting.apm_lib.plugin.Plugin
 import com.cnting.apm_lib.util.DisplayUtil
 import java.lang.RuntimeException
@@ -17,30 +16,30 @@ import java.lang.RuntimeException
  * Created by cnting on 2023/7/24
  *
  */
-class Matrix private constructor(
+class APM private constructor(
     val application: Application,
     private val plugins: Set<Plugin>,
     private var pluginListener: PluginListener?,
     private val analyzeIssue: Boolean
 ) {
     companion object {
-        const val TAG = "Matrix"
+        const val TAG = "APM"
 
         @Volatile
-        private var instance: Matrix? = null
+        private var instance: APM? = null
 
-        fun with(): Matrix {
+        fun with(): APM {
             if (instance == null) {
-                throw RuntimeException("you must init Matrix sdk first")
+                throw RuntimeException("you must init APM sdk first")
             }
             return instance!!
         }
 
-        private fun init(matrix: Matrix) {
+        private fun init(apm: APM) {
             if (instance == null) {
-                instance = matrix
+                instance = apm
             } else {
-                throw RuntimeException("Matrix instance is already set")
+                throw RuntimeException("APM instance is already set")
             }
         }
     }
@@ -105,8 +104,8 @@ class Matrix private constructor(
             return this
         }
 
-        fun build(): Matrix {
-            return Matrix(application, plugins, pluginListener, analyzeIssue)
+        fun build(): APM {
+            return APM(application, plugins, pluginListener, analyzeIssue)
         }
     }
 

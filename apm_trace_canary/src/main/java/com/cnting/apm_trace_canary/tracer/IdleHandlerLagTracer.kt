@@ -4,7 +4,7 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.os.Looper
 import android.os.MessageQueue.IdleHandler
-import com.cnting.apm_lib.Matrix
+import com.cnting.apm_lib.APM
 import com.cnting.apm_lib.lifecycle.owners.ProcessUiLifecycleOwner
 import com.cnting.apm_lib.report.Issue
 import com.cnting.apm_lib.util.DeviceUtil
@@ -45,12 +45,12 @@ class IdleHandlerLagTracer : Tracer() {
     }
 
     private val idleHandlerLagRunnable = Runnable {
-        val plugin = Matrix.with().getPluginByClass(TracePlugin::class.java) ?: return@Runnable
+        val plugin = APM.with().getPluginByClass(TracePlugin::class.java) ?: return@Runnable
         val stackTrace = Utils.getMainThreadJavaStackTrace()
         val isForeground = isForeground()
         val scene = ProcessUiLifecycleOwner.visibleScene
         var jsonObject = JSONObject()
-        jsonObject = DeviceUtil.getDeviceInfo(jsonObject, Matrix.with().application)
+        jsonObject = DeviceUtil.getDeviceInfo(jsonObject, APM.with().application)
         jsonObject.put(SharePluginInfo.ISSUE_STACK_TYPE, Constants.Type.LAG_IDLE_HANDLER)
         jsonObject.put(SharePluginInfo.ISSUE_SCENE, scene)
         jsonObject.put(SharePluginInfo.ISSUE_THREAD_STACK, stackTrace)

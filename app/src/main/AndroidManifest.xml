@@ -33,6 +33,9 @@
         <activity
             android:name=".ui.crash.CrashActivity2"
             android:label="异常" />
+        <activity
+            android:name=".ui.thread.ThreadActivity"
+            android:label="线程" />
     </application>
 
 </manifest>

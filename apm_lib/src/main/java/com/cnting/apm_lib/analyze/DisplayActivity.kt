@@ -2,23 +2,19 @@ package com.cnting.apm_lib.analyze
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.util.TimeUtils
 import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.cnting.apm_lib.Matrix
+import com.cnting.apm_lib.APM
 import com.cnting.apm_lib.R
 import com.cnting.apm_lib.db.IssueEntity
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.supervisorScope
 import java.text.SimpleDateFormat
 
 /**
@@ -32,7 +28,7 @@ class DisplayActivity : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.display_recycler)
         recyclerView.layoutManager = LinearLayoutManager(this)
         lifecycle.coroutineScope.launch {
-            val list = Matrix.with().dbRepository.getAllIssue()
+            val list = APM.with().dbRepository.getAllIssue()
             recyclerView.adapter = DisplayAdapter(list) {
                 val intent = Intent(this@DisplayActivity, AnalyzeActivity::class.java)
                 intent.putExtra("issue", it)
