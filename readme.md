@@ -4,3 +4,4 @@
 * [卡顿检测 & ANR](./docs/trace.md)
 * [bitmap检测](./docs/bitmap.md)
 * [崩溃优化](./doc/crash.md)
+* [线程优化](./doc/thread.md)
