@@ -32,10 +32,13 @@ class IOActivity : ComponentActivity() {
 
     private fun writeBigFile() {
         val file = File(externalCacheDir, "test.txt")
+        if (file.exists()) {
+            file.delete()
+        }
         val fileOutputStream = FileOutputStream(file)
         val data = ByteArray(512)
         (data.indices).forEach { data[it] = it.toByte() }
-        repeat(1000000) {
+        repeat(100000) {
             fileOutputStream.write(data)
         }
         fileOutputStream.flush()
@@ -55,6 +58,25 @@ class IOActivity : ComponentActivity() {
     }
 
     private fun notCloseFile() {
+        val file = File(externalCacheDir, "test.txt")
+        if (file.exists()) {
+            file.delete()
+        }
+        val fileOutputStream = FileOutputStream(file)
+        val data = ByteArray(512)
+        (data.indices).forEach { data[it] = it.toByte() }
+        repeat(100000) {
+            fileOutputStream.write(data)
+        }
+        fileOutputStream.flush()
 
+        //测试文件泄漏
+//        fileOutputStream.close()
+        Log.d("===>", "写大文件结束")
+
+
+        //手动gc，hook点在需要触发finalize
+        Runtime.getRuntime().gc()
+        Runtime.getRuntime().gc()
     }
 }
