@@ -5,3 +5,4 @@
 * [bitmap检测](./docs/bitmap.md)
 * [崩溃优化](./docs/crash.md)
 * [线程优化](./docs/thread.md)
+* [IO优化](./docs/io.md)

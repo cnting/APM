@@ -21,11 +21,10 @@ android {
         externalNativeBuild {
             cmake {
                 cppFlags ''
+            }
+            ndk {
                 abiFilters "armeabi-v7a"
             }
-        }
-        ndk {
-            abiFilters "armeabi-v7a"
         }
     }
 
@@ -84,5 +83,6 @@ dependencies {
     implementation project(':apm_trace_canary')
     implementation project(':apm_crash')
     implementation project(':apm_thread')
+    implementation project(':apm_io')
 
 }

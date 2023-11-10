@@ -29,13 +29,16 @@
             android:label="卡顿检测 和 ANR" />
         <activity
             android:name=".ui.crash.CrashActivity"
-            android:label="异常" />
+            android:label="异常监控" />
         <activity
             android:name=".ui.crash.CrashActivity2"
-            android:label="异常" />
+            android:label="异常监控" />
         <activity
             android:name=".ui.thread.ThreadActivity"
-            android:label="线程" />
+            android:label="线程监控" />
+        <activity
+            android:name=".ui.io.IOActivity"
+            android:label="IO监控" />
     </application>
 
 </manifest>

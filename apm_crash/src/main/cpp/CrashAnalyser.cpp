@@ -82,11 +82,11 @@ void copyInfo(int code, siginfo_t *si, void *sc) {
     nativeCrashInfo->sc = sc;
     nativeCrashInfo->pid = getpid();
     nativeCrashInfo->tid = gettid();
-    nativeCrashInfo->processName = getProcessName(nativeCrashInfo->pid);
+    nativeCrashInfo->processName = apm::getProcessName(nativeCrashInfo->pid);
     if (nativeCrashInfo->pid == nativeCrashInfo->tid) {
         nativeCrashInfo->threadName = "main";
     } else {
-        nativeCrashInfo->threadName = getThreadName(nativeCrashInfo->tid);
+        nativeCrashInfo->threadName = apm::getThreadName(nativeCrashInfo->tid);
     }
     nativeCrashInfo->frame_size = 0;
     nativeCrashInfo->desc = desc_sig(nativeCrashInfo->si->si_signo, nativeCrashInfo->si->si_code);

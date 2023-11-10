@@ -22,4 +22,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="线程检测" />
+
+    <Button
+        android:id="@+id/io"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IO监控" />
 </LinearLayout>

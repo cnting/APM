@@ -3,6 +3,7 @@ package com.example.apm
 import android.app.Application
 import com.cnting.apm_crash.CrashPluginConfig
 import com.cnting.apm_crash.CrushPlugin
+import com.cnting.apm_io.IOPlugin
 import com.cnting.apm_lib.APM
 import com.cnting.apm_thread.ThreadPlugin
 import com.cnting.apm_trace_canary.TracePlugin
@@ -18,6 +19,7 @@ class App : Application() {
             .plugin(TracePlugin())
             .plugin(CrushPlugin(CrashPluginConfig(homeActivityName = MainActivity::class.java.name)))
             .plugin(ThreadPlugin())
+            .plugin(IOPlugin())
 //                .pluginListener(pluginListener)
             .build()
         apm.startAllPlugin()

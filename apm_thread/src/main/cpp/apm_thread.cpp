@@ -23,6 +23,9 @@ JNIEXPORT jint JNICALL
 Java_com_cnting_apm_1thread_NativeThreadMonitor_nativeInit(JNIEnv *env, jobject thiz,
                                                            jint sdk_version) {
     ndk_init(env);
+
+    //为了能动态调用so里的方法，需要通过dlopen、dlsym找到函数地址
+
     void *so_addr = ndk_dlopen("libart.so", RTLD_LAZY);
     if (so_addr == NULL) {
         return -1;
@@ -99,7 +102,7 @@ void *new_create_callback(void *arg) {
     void *result = old_create_callback(arg);
     long aliveTime = time(NULL) - startTime;
     LOGE("线程执行完毕，存活时间 -> %lds", aliveTime);
-    const char *thread_info = getThreadRunInfo(getpid(), gettid());
+    const char *thread_info = apm::getThreadRunInfo(getpid(), gettid());
     LOGE("thread_info -> %s", thread_info);
     return result;
 }

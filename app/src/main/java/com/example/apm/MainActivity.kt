@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import androidx.activity.ComponentActivity
 import com.example.apm.ui.crash.CrashActivity
+import com.example.apm.ui.io.IOActivity
 import com.example.apm.ui.thread.ThreadActivity
 import com.example.apm.ui.trace.TraceActivity
 
@@ -21,6 +22,9 @@ class MainActivity : ComponentActivity() {
         }
         findViewById<View>(R.id.thread).setOnClickListener {
             startActivity(Intent(this, ThreadActivity::class.java))
+        }
+        findViewById<View>(R.id.io).setOnClickListener {
+            startActivity(Intent(this, IOActivity::class.java))
         }
     }
 
