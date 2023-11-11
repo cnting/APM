@@ -51,7 +51,7 @@ public class CloseGuardHooker {
             for (Method m : guardClass.getMethods()) {
                 Log.e("===>", "方法:" + m.getName());
             }
-            // TODO: 这里有问题，没有 getReporter()方法了，还没找到对应版本的源码
+            // TODO: 不知道为啥拿不到 getReporter()方法了，每个版本源码都看过了都有的
             Method getReporterMethod = guardClass.getDeclaredMethod("getReporter", null);
             getReporterMethod.setAccessible(true);
             Object originReporter = getReporterMethod.invoke(null);

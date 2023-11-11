@@ -10,6 +10,8 @@
 思路：
 1. 自定义信号处理器
 2. 开子线程循环获取异常信息
+（1）获取Java堆栈，通过JNI调用Java方法去拿
+（2）获取native堆栈要用到 `unwind`
 
 具体实现看 `NativeCrashMonitor.kt`
 
