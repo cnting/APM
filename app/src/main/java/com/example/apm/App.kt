@@ -1,6 +1,7 @@
 package com.example.apm
 
 import android.app.Application
+import com.cnting.apm_battery.BatteryPlugin
 import com.cnting.apm_crash.CrashPluginConfig
 import com.cnting.apm_crash.CrushPlugin
 import com.cnting.apm_io.IOPlugin
@@ -20,6 +21,7 @@ class App : Application() {
             .plugin(CrushPlugin(CrashPluginConfig(homeActivityName = MainActivity::class.java.name)))
             .plugin(ThreadPlugin())
             .plugin(IOPlugin())
+            .plugin(BatteryPlugin())
 //                .pluginListener(pluginListener)
             .build()
         apm.startAllPlugin()

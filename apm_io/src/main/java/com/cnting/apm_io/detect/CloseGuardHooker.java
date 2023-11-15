@@ -31,26 +31,26 @@ public class CloseGuardHooker {
             setEnableMethod.setAccessible(true);
             setEnableMethod.invoke(null, true);
 
-            for(Constructor f:guardClass.getConstructors()){
-                Log.e("===>","构造:"+f.getName());
-            }
-
-            Log.d("===>", "getDeclaredFields()"+guardClass.getDeclaredFields().length);
-            for (Field f : guardClass.getDeclaredFields()) {
-                Log.e("===>", "变量:" + f.getName());
-            }
-            Log.d("===>", "getFields()");
-            for (Field f : guardClass.getFields()) {
-                Log.e("===>", "变量:" + f.getName());
-            }
-            Log.d("===>", "getDeclaredMethods()");
-            for (Method m : guardClass.getDeclaredMethods()) {
-                Log.e("===>", "方法:" + m.getName());
-            }
-            Log.d("===>", "getMethods()");
-            for (Method m : guardClass.getMethods()) {
-                Log.e("===>", "方法:" + m.getName());
-            }
+//            for(Constructor f:guardClass.getConstructors()){
+//                Log.e("===>","构造:"+f.getName());
+//            }
+//
+//            Log.d("===>", "getDeclaredFields()"+guardClass.getDeclaredFields().length);
+//            for (Field f : guardClass.getDeclaredFields()) {
+//                Log.e("===>", "变量:" + f.getName());
+//            }
+//            Log.d("===>", "getFields()");
+//            for (Field f : guardClass.getFields()) {
+//                Log.e("===>", "变量:" + f.getName());
+//            }
+//            Log.d("===>", "getDeclaredMethods()");
+//            for (Method m : guardClass.getDeclaredMethods()) {
+//                Log.e("===>", "方法:" + m.getName());
+//            }
+//            Log.d("===>", "getMethods()");
+//            for (Method m : guardClass.getMethods()) {
+//                Log.e("===>", "方法:" + m.getName());
+//            }
             // TODO: 不知道为啥拿不到 getReporter()方法了，每个版本源码都看过了都有的
             Method getReporterMethod = guardClass.getDeclaredMethod("getReporter", null);
             getReporterMethod.setAccessible(true);

@@ -21,7 +21,7 @@ pthread_create_result = pthread_create(&new_pthread,
 hook `CreateCallback`，在它前后记录时间，就能知道线程执行执行，这里这是 inline hook，具体看`NativeThreadMonitor.kt`
 
 ### 线程泄漏监控
-
+TODO 看 KOOM
 
 ### 线程收敛
 

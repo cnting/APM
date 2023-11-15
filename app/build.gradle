@@ -84,5 +84,6 @@ dependencies {
     implementation project(':apm_crash')
     implementation project(':apm_thread')
     implementation project(':apm_io')
+    implementation project(':apm_battery')
 
 }
